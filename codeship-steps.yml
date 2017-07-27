@@ -1,0 +1,51 @@
+# codeship-steps.yml
+- name: run_test
+  service: test
+  command: sh /data/scripts/test.sh /data
+  # command: echo "Hello World"
+  # command: pwd
+  # command: ls -la /
+  # command: ls -la /etc/init.d
+  # command: cat /etc/bash.bashrc
+    # command: sh /etc/init.d/nginx start
+  # command: ls -la /home
+  # command: cat /etc/debian_version
+  # command: cat /etc/os-release
+  # command: ls -la /var/www/vcard
+  # command: ls -la /log/application
+  # command: ls -la /var/alsocan/config
+  # command: find
+  # command: ps axu
+  # command: man env
+  # command: dpkg --list
+  # command: ls -la /var/www/vcard/modules/phpunit/phpunit/phpunit
+  # command: /var/www/vcard/modules/phpunit/phpunit/phpunit
+  # command: apt-cache search phpunit
+  # command: apt-get install phpunit
+  # command: export API_URL=http://api-ih-sgmc.dev
+  # command: export CONFIG_ROOT=/var/alsocan/config
+  # command: export LOG_DIR=/log/application
+  # command: /data/modules/bin/phpunit --debug --stop-on-failure tests/
+  # command: apt-get update && apt-get -y upgrade &&\apt-get -y install unzip groff phpunit
+  # command: phpunit --debug /var/www/vcard/tests/IronhideTest.php
+  # command: phpunit
+  # command: echo CONFIG_ROOT
+
+- name: push_ecr
+  tag: master
+  type: parallel
+  steps:
+  - type: push
+    service: api
+#    registry: to be added
+#    image_name: to be added
+    image_tag: "{{.BuildID}}"
+    dockercfg_service: aws_container
+
+# - name: deploy_stack
+#   tag: master
+#   service: aws_deploy
+#   type: serial
+#   steps:
+#   - name: ssm_db
+#     command: ssm-db-up.sh /data

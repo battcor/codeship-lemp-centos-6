@@ -1,0 +1,30 @@
+# codeship-services.yml
+test:
+
+  encrypted_env_file: uat.encrypted
+  environment:
+    - API_URL=http://api-ih-relay.dev
+    - CONFIG_ROOT=/var/alsocan/config
+    - LOG_DIR=/log/application
+  volumes:
+    - ./:/var/www/vcard
+    - ../credentials/ih-relay:/var/alsocan/config
+    - /log:/log
+
+  api:
+  build:
+#    image: to be added
+    dockerfile_path: Dockerfile
+    encrypted_env_file: uat.env.encrypted
+  cached: true
+
+aws_container:
+  image: codeship/aws-ecr-dockercfg-generator
+  encrypted_env_file: uat.env.encrypted
+  add_docker: true
+
+aws_deploy:
+  image: matchmove/codeship-aws-deployment
+  encrypted_env_file: uat.env.encrypted
+  volumes:
+    - ./:/var/www/vcard

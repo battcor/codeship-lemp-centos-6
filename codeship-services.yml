@@ -1,0 +1,6 @@
+build:
+  build:
+    image: battcor/docker-lemp-centos-6:latest
+    dockerfile_path: Dockerfile
+    encrypted_args_file: env.encrypted
+    cached: false
